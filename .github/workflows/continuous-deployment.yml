@@ -23,26 +23,11 @@ jobs:
       - name: Test
         run: |
           npm run test -- --prod
-  release-changelog:
+  release-please:
     needs: ci
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
+      - uses: GoogleCloudPlatform/release-please-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          output-file: "false"
-
-      - name: Create Release
-        uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+          release-type: node
+          package-name: release-please-action          
