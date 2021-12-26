@@ -23,6 +23,11 @@ jobs:
       - name: Test
         run: |
           npm run test -- --prod
+      - name: Deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
+        run: |
+          npm run deploy        
   release-please:
     needs: ci
     runs-on: ubuntu-latest
