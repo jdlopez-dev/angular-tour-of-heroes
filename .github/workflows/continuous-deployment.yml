@@ -13,22 +13,8 @@ jobs:
       - name: Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "16"
-          check-latest: true
-      - name: Cache node modules
-        id: cache-node-modules-id
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          node-version: "17"
       - name: Install Dependencies
-        if: steps.cache-node-modules-id.outputs.cache-hit != 'true'
         run: |
           npm ci
       - name: Build
@@ -37,9 +23,6 @@ jobs:
       - name: Test
         run: |
           npm run test -- --prod
-      - name: Deploy
-        run: |
-          npm run deploy
   release-changelog:
     needs: ci
     runs-on: ubuntu-latest
