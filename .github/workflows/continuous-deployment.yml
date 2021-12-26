@@ -13,7 +13,7 @@ jobs:
       - name: Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: "16"
           check-latest: true
       - name: Cache node modules
         id: cache-node-modules-id
@@ -37,6 +37,9 @@ jobs:
       - name: Test
         run: |
           npm run test -- --prod
+      - name: Deploy
+        run: |
+          npm run deploy
   release-changelog:
     needs: ci
     runs-on: ubuntu-latest
@@ -60,32 +63,3 @@ jobs:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
-  deploy:
-    needs: release-changelog
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-          check-latest: true
-      - name: Cache node modules
-        id: cache-node-modules-id
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Dependencies
-        if: steps.cache-node-modules-id.outputs.cache-hit != 'true'
-        run: |
-          npm ci
-      - name: Deploy
-        run: |
-          npm run deploy
