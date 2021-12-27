@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-      - '!releases-*'
+      - "!releases-*"
     paths-ignore:
-      - '**.md'      
+      - "**.md"
   workflow_dispatch:
 jobs:
   ci:
@@ -16,7 +16,7 @@ jobs:
       - name: Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "17"
+          node-version: "16"
       - name: Install Dependencies
         run: |
           npm ci
@@ -26,16 +26,16 @@ jobs:
       - name: Test
         run: |
           npm run test -- --prod
-      - name: Deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
-        run: |
-          npm run deploy        
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.8
+        with:
+          branch: gh-pages
+          folder: dist/angular-tour-of-heroes
   release-please:
-    needs: ci
+    needs: [ci]
     runs-on: ubuntu-latest
     steps:
       - uses: GoogleCloudPlatform/release-please-action@v2
         with:
           release-type: node
-          package-name: release-please-action          
+          package-name: release-please-action
