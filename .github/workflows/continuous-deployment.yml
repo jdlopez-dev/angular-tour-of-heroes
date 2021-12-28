@@ -1,14 +1,12 @@
 name: continuous-deployment
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**.md"
+  workflow_run:
+    workflows: ["release"]
+    types: [completed]
   workflow_dispatch:
 jobs:
-  ci-cd:
+  on-success:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,33 +20,9 @@ jobs:
       - name: Build
         run: |
           npm run build
-      - name: Test
-        run: |
-          npm run test -- --prod
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: dist/angular-tour-of-heroes
-  release-changelog:
-    needs: ci-cd
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          output-file: "false"
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
