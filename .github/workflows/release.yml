@@ -9,7 +9,6 @@ on:
   workflow_dispatch:
 jobs:
   release-changelog:
-    needs: ci-cd
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
