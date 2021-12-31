@@ -1,9 +1,8 @@
 <h3 align="center">angular-tour-of-heroes</h3>
 
 <div align="center">
-
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/jdlopez-dev/angular-tour-of-heroes)
-
 </div>
 
 <p align="center">
