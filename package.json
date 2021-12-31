@@ -1,6 +1,6 @@
 {
   "name": "angular-tour-of-heroes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "ng": "ng",
     "start": "npm run write:env -s && ng serve",
