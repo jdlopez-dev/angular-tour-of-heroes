@@ -1,5 +1,12 @@
 name: sonar-cloud
-on: [pull_request, push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+  pull_request:
+  workflow_dispatch:
 jobs:
   sonarcloud:
     name: SonarCloud
