@@ -13,7 +13,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { MatSliderModule } from '@angular/material/slider';
       dataEncapsulation: false,
     }),
     BrowserAnimationsModule,
-    MatSliderModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent],
