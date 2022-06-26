@@ -10,17 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.2
       - name: Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
       - name: Install Dependencies
         run: |
-          pnpm install --frozen-lockfile
+          npm ci
       - name: Build
         run: |
-          pnpm run build
+          npm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
