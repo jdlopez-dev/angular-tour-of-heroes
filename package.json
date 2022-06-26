@@ -1,6 +1,6 @@
 {
   "name": "angular-tour-of-heroes",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "scripts": {
     "ng": "ng",
     "start": "npm run -s && ng serve",
